@@ -1,17 +1,11 @@
-var jsdom = require('jsdom');
+const jsdom = require('jsdom');
+const { JSDOM } = jsdom;
 
-var parseHtml = exports.parseHtml = function(content, callback){
-  jsdom.env({
-    html: content,
-    scripts: [
-      'http://code.jquery.com/jquery.js'
-    ]
-  }, function (err, window) {
-    var $ = window.jQuery;
-    callback(window.$);
-  });
+exports.parseHtml = function(content, callback) {
+  const { window } = new JSDOM(content);
+  const $ = require('jquery')(window)
+  callback(window.$);
 };
-
 
 var http = require('http');
 
